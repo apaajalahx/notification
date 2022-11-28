@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+    <head>
+    <script type="text/javascript" src="https://cdn.socket.io/4.4.1/socket.io.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        var socket;
+        $(document).ready(function(){
+            socket = io.connect('http://127.0.0.1:8000');
+            socket.on('connect', function(){
+                console.log(socket.connected);
+                console.log('oke');
+                socket.emit('get_notify', {});
+                socket.on('mass_notify', function(data) {
+                    console.log(data)
+                });
+                socket.on('single_notify', function(data){
+                    console.log(data);
+                });
+            });
+        });
+    </script>
+    </head>
+</html>
