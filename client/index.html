@@ -1,23 +1,165 @@
 <!DOCTYPE html>
-    <head>
+<head>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdn.socket.io/4.4.1/socket.io.min.js"></script>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.4.2.min.js"></script>
-    <script type="text/javascript" charset="utf-8">
-        var socket;
-        $(document).ready(function(){
-            socket = io.connect('http://127.0.0.1:8000');
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body{
+    background-color: #fff;
+}
+
+
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #eee; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+
+.wrapper{
+   
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #651FFF;
+
+}
+
+.main{
+	background-color: #eee;
+	width: 320px;
+	position: relative;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	padding: 6px 0px 0px 0px;
+}
+.scroll{
+	overflow-y: scroll;
+	scroll-behavior: smooth;
+	    height: 325px;
+}
+.img1{
+	border-radius: 50%;
+	background-color: #66BB6A;
+}
+.name{
+	font-size: 8px;
+    margin-bottom: 1px;
+}
+.msg{
+	background-color: #fff;
+	font-size: 11px;
+	padding: 5px;
+	border-radius: 5px;
+	font-weight: 500;
+	color: #3e3c3c;
+}
+.between{
+	font-size: 8px;
+	font-weight: 500;
+	color: #a09e9e;
+}
+.navbar{
+	border-bottom-left-radius: 8px;
+	border-bottom-right-radius: 8px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+}
+.form-control{
+	font-size: 12px;
+	font-weight: 400;
+	width: 230px;
+	height: 30px;
+	border: none;
+
+}
+form-control:focus{
+	box-shadow: none;
+	overflow: hidden;
+	border: none;
+}
+.form-control:focus{
+	box-shadow: none !important;
+}
+.icon1{
+	color: #7C4DFF !important;
+	font-size: 18px !important;	
+	cursor: pointer;
+}
+
+.icon2{
+	color: #512DA8 !important;
+    font-size: 18px !important;
+    position: relative;
+    left: 8px;
+    padding: 0px;
+    cursor: pointer;
+
+}
+
+
+.icondiv{
+	
+	border-radius: 50%;
+	width: 15px;
+	height: 15px;
+	padding: 2px;
+	position: relative;
+	bottom: 1px;
+
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+	<div class="main">
+		<div class="px-2 scroll">
+            <div id="GetData"></div>
+		</div>
+		
+	</div>
+
+	</div>
+</body>
+
+
+<script>
+    var socket;
+    $(document).ready(function(){
+        
+        data = document.getElementById('GetData');
+        socket = io.connect('http://127.0.0.1:8000');
             socket.on('connect', function(){
                 console.log(socket.connected);
                 console.log('oke');
                 socket.emit('get_notify', {});
                 socket.on('mass_notify', function(data) {
-                    console.log(data)
+                    data.data.map((d) => {
+                        $('#GetData').append('<div class="d-flex align-items-center"><div class="pr-2 pl-1"><span class="name">' + d.created_at + '</span><p class="msg">' + d.text + '</p></div></div>');
+                    });
                 });
                 socket.on('single_notify', function(data){
-                    console.log(data);
+                    d = data.data;
+                    $('#GetData').append('<div class="d-flex align-items-center"><div class="pr-2 pl-1"><span class="name">' + d.created_at + '</span><p class="msg">' + d.text + '</p></div></div>');
                 });
             });
-        });
-    </script>
-    </head>
+    });
+</script>
 </html>
