@@ -14,7 +14,7 @@ class Serializer(object):
 class Notification(db.Model, Serializer):
     __tablename__ = 'notification'
     id = db.Column(db.Integer, primary_key=True)
-    text = db.Column(db.String(20), nullable=False)
+    text = db.Column(db.String(255), nullable=False)
     url = db.Column(db.String(150), nullable=False)
     created_at = db.Column(db.DateTime(timezone=True),
                             server_default=func.now())

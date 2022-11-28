@@ -15,10 +15,10 @@ def create_notification(args):
     socket.emit('single_notify', {'data':  Notification.single_notif(create.id)})
     return jsonify(Notification.single_notif(create.id))
 
-@main.route('/ping', methods=['GET'])
-def ping():
-    socket.emit('single_notify', {'data' : 'oke ping'})
-    return '', 200
+# @main.route('/ping', methods=['GET'])
+# def ping():
+#     socket.emit('single_notify', {'data' : 'oke ping'})
+#     return '', 200
 
 @socket.on('get_notify')
 def ReadNotification(msg):
